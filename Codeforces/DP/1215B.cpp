@@ -1,8 +1,5 @@
 // I am Varun Das from Jadavpur University
 #include <bits/stdc++.h>
-#pragma GCC target ("avx2")
-#pragma GCC optimization ("O3")
-#pragma GCC optimization ("unroll-loops")
 #define mod 1000000007
 #define ll long long
 #define dbg(x) cerr << #x << " = " << x << endl
@@ -11,19 +8,20 @@
 #define rep(i,a,b) for(int i=a;i>=b;i--)
 #define nax 503405
 using namespace std;
-ll n,a[nax],dp[nax][2];
+ll n,a[nax],dp[200100][2],b[200100][2];
 ll f(ll i,ll j){
     if(i < 0) return 0;
     if(i == 0){
-        if(a[i] > 0){
-            dp[i][0] = 1;
+        if(a[0] > 0){
+            dp[0][0] = 1;
         }
         else{
-            dp[i][1] = 1;
+            dp[0][1] = 1;
         }
-        return dp[i][j];
+        return dp[0][j];
     }
-    if(dp[i][j]!=0) return dp[i][j];
+    if(b[i][j]==1) return dp[i][j];
+    b[i][j] = 1;
     if(a[i] > 0){
         dp[i][0] = f(i-1,0) + 1;
         dp[i][1] = f(i-1,1);
@@ -36,18 +34,17 @@ ll f(ll i,ll j){
 }
 
 int main() {
-#ifdef _DEBUG
-	freopen("input.txt", "r", stdin);
-//	freopen("output.txt", "w", stdout);
-#endif
 ios_base::sync_with_stdio(false);
 cin.tie(NULL);
 //cout<<fixed<<setprecision(12);
 cin>>n;
 loop(i,0,n){
     cin>>a[i];
+    dp[i][0]=0;
+    dp[i][1]=0;
+    b[i][0] = 0;
+    b[i][1] = 0;
 }
-memset(dp,0,sizeof(dp));
 f(n-1,0);
 ll p=0,ne=0;
 loop(i,0,n){

@@ -16,7 +16,7 @@ struct Trie* getnode(void){
     return node;
 } 
 
-bool insert(struct Trie* root, string word){
+void insert(struct Trie* root, string word){
 
     for(int i = 0;i < word.size();i++){
 

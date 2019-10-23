@@ -11,6 +11,7 @@ void bfs(int i){
 	queue<int>q;
 	level[i] = 0;
 	visited[i] = 1;
+	q.push(i);
 	
 	while(!q.empty()){
 		int current  = q.front();

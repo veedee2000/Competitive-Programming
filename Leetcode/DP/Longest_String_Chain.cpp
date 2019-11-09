@@ -23,9 +23,9 @@ public:
                 for (int i = 0; i < w.size(); i++){
                     string new_w = "";
                     if(i != 0)
-                        new_w = w.substr(0, i) + w.substr(i + 1, w_len - i - 1);
+                        new_w = w.substr(0, i) + w.substr(i + 1, w_len);
                     else
-                        new_w = w.substr(1, w_len - 1);
+                        new_w = w.substr(1, w_len);
                     
                         if (len.find(new_w) != len.end()) // if there exist a substring of w with one letter removed, then see if chain from that string is long enough
                         len[w] = max(len[w], len[new_w] + 1);

@@ -5,8 +5,6 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        cout<<s.size()<<" "<<t.size();
-        return "";
         unordered_map<int,unordered_map<int,int>>mp;
         for(int i = 65;i <= 122;i++){
             mp[0][i] = (int(s[0]) == i) ? 1 : 0;

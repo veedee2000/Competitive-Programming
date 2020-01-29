@@ -4,7 +4,6 @@ public:
     vector<string>ans;
     vector<vector<bool>>b;
     vector<int>dr,dc;
-    unordered_map<string,bool>mp;
     
     struct trie{
         struct trie* child[26];
@@ -30,8 +29,8 @@ public:
         if(b[i][j]) return;
         if(!root) return;
         if(root -> endOfWord){
-            if(!mp.count(path)) ans.push_back(path);
-            mp[path] = 1;
+            ans.push_back(path);
+            root -> endOfWord = 0;
         }
         b[i][j] = 1;
         for(int rc = 0;rc < 4;rc++){

@@ -3,13 +3,13 @@ public:
     unordered_map<string,int>mp;
     vector<vector<int>>ans;
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
         f(0,nums,{},"");
         return ans;
     }
     
     void f(int i,vector<int>nums,vector<int>v,string s){
         if(i == nums.size()){
-            sort(s.begin(),s.end());
             if(!mp.count(s)) ans.push_back(v),mp[s] = 1;
             return;
         }

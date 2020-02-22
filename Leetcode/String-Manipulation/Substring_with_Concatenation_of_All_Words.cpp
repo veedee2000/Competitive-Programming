@@ -19,8 +19,7 @@ public:
     }
     
     bool check(string v){
-        unordered_map<string,int>sub;
-        for(auto x:mp) sub[x.first] = x.second;
+        unordered_map<string,int>sub = mp;
         for(int i = 0;i < v.size();i += sz){
             if(!sub.count(v.substr(i,sz)) or (--sub[v.substr(i,sz)] < 0)) return 0;
         }

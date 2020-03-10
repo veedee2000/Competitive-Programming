@@ -4,9 +4,17 @@ class Node {
 public:
     int val;
     vector<Node*> neighbors;
-
-    Node() {}
-
+    
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    
     Node(int _val, vector<Node*> _neighbors) {
         val = _val;
         neighbors = _neighbors;
@@ -15,17 +23,15 @@ public:
 */
 class Solution {
 public:
+    unordered_map<int,Node*>mp;
     Node* cloneGraph(Node* node) {
-        static unordered_map<Node*,Node*>mp;  // Static is needed
         if(!node) return NULL;
-        if(mp.find(node) == mp.end()){  // Finding if the key exists
-            Node* new_node = new Node();  // The parenthesis are imp!!!
-            new_node -> val = node -> val;
-            mp[node] = new_node;
-            for(auto x:node -> neighbors){
-                new_node -> neighbors.push_back(cloneGraph(x));
-            }
+        Node* newNode = new Node(node -> val);
+        mp[node -> val] = newNode;
+        for(auto x:node -> neighbors){
+            if(!mp.count(x -> val)) newNode -> neighbors.push_back(cloneGraph(x));
+            else newNode -> neighbors.push_back(mp[x -> val]);
         }
-        return mp[node];
+        return newNode;
     }
 };

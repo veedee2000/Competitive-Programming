@@ -1,6 +1,8 @@
 /*
 
-The question asked was given digits 1-9 with each digit associated with a value. Now we have a wall that needs to be painted with those digits and each digit painted requires the value volume, you need to form the largest number possible from this. Given that the sum of the volume of the number is equal to the wall volume.
+The question asked was given digits 1-9 with each digit associated with a value. 
+Now we have a wall that needs to be painted with those digits and each digit painted requires the value volume, you need to form the largest number possible from this.
+Given that the sum of the volume of the number is equal to the wall volume.
 
 Input:
 1 2 3 4 5 6 7 8 9

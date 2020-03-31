@@ -55,58 +55,35 @@ int solve(){
 	int ans = 0;
 	for(auto x:pipes){
 		int house1 = x[0],house2 = x[1],costPipe = x[2];
-		if(dsu.findSet(house1) == -1 and dsu.findSet(house2) == -1){
-			if(costPipe + well[house1] < costPipe + well[house2]){
-				if(costPipe + well[house1] < well[house1] + well[house2]){
-					
-					dsu.setParentInitial(house1);
-					dsu.unionSet(house1,house2);
-					ans += costPipe + well[house1];
-				}
-				else{
-					
-					dsu.setParentInitial(house1);
-					dsu.setParentInitial(house2);
-					ans += well[house1] + well[house2];
-				}
-			}
-			else{
-				if(costPipe + well[house1] < well[house1] + well[house2]){
-					dsu.setParentInitial(house2);
-					dsu.unionSet(house1,house2);
-					ans += costPipe + well[house2];
-				}
-				else{
-					dsu.setParentInitial(house1);
-					dsu.setParentInitial(house2);
-					ans += well[house1] + well[house2];
-				}
-			}
-		}
-		else if(dsu.findSet(house1) == -1){
-			if(well[house1] < costPipe){
+		if(costPipe + well[house1] < costPipe + well[house2]){
+			if(costPipe + well[house1] < well[house1] + well[house2]){
 				
 				dsu.setParentInitial(house1);
-				ans += well[house1];
+				dsu.unionSet(house1,house2);
+				ans += costPipe + well[house1];
 			}
 			else{
 				
-				dsu.unionSet(house1,house2);
-				ans += costPipe;
+				dsu.setParentInitial(house1);
+				dsu.setParentInitial(house2);
+				ans += well[house1] + well[house2];
 			}
 		}
-		else if(dsu.findSet(house2) == -1){
-			if(well[house2] < costPipe){
+		else{
+			if(costPipe + well[house1] < well[house1] + well[house2]){
 				
 				dsu.setParentInitial(house2);
-				ans += well[house2];
+				dsu.unionSet(house1,house2);
+				ans += costPipe + well[house2];
 			}
 			else{
 				
-				dsu.unionSet(house1,house2);
-				ans += costPipe;
+				dsu.setParentInitial(house1);
+				dsu.setParentInitial(house2);
+				ans += well[house1] + well[house2];
 			}
 		}
+		well[house1] = 0,well[house2] = 0;
 	}
 	for(int i = 0;i < n;i++) if(dsu.findSet(i) == -1) ans += well[i];
 	return ans;

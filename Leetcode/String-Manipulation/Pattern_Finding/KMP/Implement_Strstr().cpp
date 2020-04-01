@@ -25,4 +25,4 @@ public:
         }
         return -1;
     }
-};IN
+};

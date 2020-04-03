@@ -29,12 +29,8 @@ public:
             if(root -> val % 2 == 0) f(root -> right,2),f(root -> left,2);
             else f(root -> right,0),f(root -> left,0);
         }
-        else if(c == 2){
-            if(root -> val % 2 == 0) f(root -> right,3),f(root -> left,3);
-            else f(root -> right,1),f(root -> left,1);
-        }
         else{
-            ans += root -> val;
+            ans += c == 3 ? root -> val : 0;
             if(root -> val % 2 == 0) f(root -> right,3),f(root -> left,3);
             else f(root -> right,1),f(root -> left,1);
         }

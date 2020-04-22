@@ -14,7 +14,6 @@ public:
         if(j == word2.size()) return (word1.size() - i);
         if(i == word1.size()) return (word2.size() - j);
         if(dp[i][j] != -1) return dp[i][j];
-        if(word1[i] == word2[j]) return dp[i][j] = f(i + 1,j + 1);
         return dp[i][j] = min({!(word1[i] == word2[j]) + f(i + 1,j + 1),1 + f(i + 1,j),1 + f(i,j + 1)});
     }
 };

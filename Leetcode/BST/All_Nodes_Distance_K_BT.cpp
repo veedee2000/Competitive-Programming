@@ -9,52 +9,31 @@
  */
 class Solution {
 public:
+    unordered_map<int,bool>mp;
+    int h,k;
     vector<int>ans;
-    vector<vector<int>>adj;
     vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
-        if(K == 0) return {target -> val};
-        adj.resize(1100);
-        create(root);
-        bfs(target -> val,K);
+        k = K;
+        setPath(root,target,0);
+        trav(root,h);
         return ans;
     }
     
-    void create(TreeNode* root){
-        if(!root) return;
+    bool setPath(TreeNode* root,TreeNode* target,int height){
+        if(!root) return 0;
+        if(root -> val == target -> val) {h = height; return mp[root -> val] = 1;}
+        return mp[root -> val] = setPath(root -> left,target,height + 1) | setPath(root -> right,target,height + 1);
+    }
+    
+    void trav(TreeNode* root,int dist){
+        if(dist == k) ans.push_back(root -> val);
         if(root -> left){
-            adj[root -> val].push_back(root -> left -> val);
-            adj[root -> left -> val].push_back(root -> val);
+            if(mp[root -> left -> val]) trav(root -> left,dist - 1);
+            else trav(root -> left,dist + 1);
         }
         if(root -> right){
-            adj[root -> val].push_back(root -> right -> val);
-            adj[root -> right -> val].push_back(root -> val);
-        }
-        create(root -> left);
-        create(root -> right);
+            if(mp[root -> right -> val]) trav(root -> right,dist - 1);
+            else trav(root -> right,dist + 1);
+        } 
     }
-    
-    void bfs(int s,int k){
-        queue<int>q;
-        vector<bool>b(1100,0);
-        int distance[1100];
-        q.push(s);
-        distance[s] = k;
-        b[s] = 1;
-        while(!q.empty()){
-            int curr = q.front();
-            q.pop();
-            for(auto x:adj[curr]){
-                if(!b[x]){
-                    b[x] = 1;
-                    distance[x] = distance[curr] - 1;
-                    if(distance[x] == 0) ans.push_back(x);
-                    else q.push(x);
-                }
-            }
-        }
-    }
-    
-    
-    
-    
 };

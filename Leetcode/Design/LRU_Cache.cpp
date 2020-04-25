@@ -28,12 +28,12 @@ public:
         
         if(!mp.count(key)) return -1;
         
-            ListNode *node = mp[key];
+        ListNode *node = mp[key];
             
         // Removing the node from its current position
         
-        node -> pre -> next = node -> next;
-        node -> next -> pre = node -> pre;
+        if(node -> pre) node -> pre -> next = node -> next;
+        if(node -> next) node -> next -> pre = node -> pre;
 
         // Inserting node after head 
         
@@ -55,12 +55,8 @@ public:
         
         else{
             ListNode *node = new ListNode (key,value);
-            ListNode *afterHead = head -> next;
-            head -> next = node;
-            node -> pre = head;
-            node -> next = afterHead;
-            afterHead -> pre = node;
             mp[key] = node;
+            get(key);
             
             if(--capacity < 0){
                 ListNode *toDelete = tail -> pre;
@@ -71,8 +67,6 @@ public:
                 capacity++;
             }
         }
-        
-        cout<<head -> next -> key<<" "<<tail -> pre -> key<<endl;
         
     }
 };

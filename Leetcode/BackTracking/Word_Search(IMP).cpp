@@ -1,26 +1,30 @@
-// Mind F**ked
-
 class Solution {
 public:
-    int step[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    int m,n;
+    vector<int>dr,dc;
     bool exist(vector<vector<char>>& board, string word) {
-        int n = board.size();
-        int m = board[0].size();
-        vector<vector<bool>> visited(n, vector<bool>(m, false));
-        for(int i = 0 ; i < board.size() ; i++)
-            for(int j = 0 ; j < board[0].size(); j++)
-                if(dfs(board, word, i, j, 0, visited))
-                    return true;
-        return false;
-    }
-    bool dfs(vector<vector<char>>& board, string word, int x, int y, int pos, vector<vector<bool>> & visited){
-        if(pos == word.size()) return true;  
-        if(x >= 0 && y >= 0 && x < board.size() && y < board[0].size() && !visited[x][y] && board[x][y] == word[pos]){
-            visited[x][y] = true;
-            for(int i = 0 ; i < 4; i++)
-                    if(dfs(board, word, x + step[i][0], y + step[i][1], pos+1, visited)) return true;  
-            visited[x][y] = false;
+        m = board.size(),n = board[0].size();
+        dr = {-1,1,0,0},dc = {0,0,-1,1};
+        vector<vector<bool>>b;
+        b.resize(m,vector<bool>(n,0));
+        for(int i = 0;i < board.size();i++){
+            for(int j = 0;j < board[0].size();j++){
+                if(f(i,j,0,board,word,b)) return 1;
+            }
         }
-        return false;    
+        return 0;
+    }
+    
+    bool f(int i,int j,int pos,vector<vector<char>>& board, string& word,vector<vector<bool>>& b){
+        if(pos == word.size()) return 1;
+        if(i < 0 or i >= m or j < 0 or j >= n) return 0;
+        if(board[i][j] != word[pos]) return 0;
+        if(b[i][j]) return 0;
+        b[i][j] = 1;
+        for(int rc = 0;rc < 4;rc++){
+            if(f(i + dr[rc],j + dc[rc],pos + 1,board,word,b)) return 1;
+        }
+        b[i][j] = 0;
+        return 0;
     }
 };

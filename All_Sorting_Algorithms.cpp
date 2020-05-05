@@ -93,6 +93,36 @@ void mergeSortIterative(){
 // ---------------
 
 
+// Pancake Sorting O(n ^ 2) -------
+
+vector<int> pancakeSort(vector<int>& A) {
+	vector<int>ans;
+	for(int i = 0;i < A.size() - 1;i++){
+	    int index = findMax(A,A.size() - i);
+	    flip(A,index);
+	    flip(A,A.size() - i - 1);
+	    ans.push_back(index + 1);
+	    ans.push_back(A.size() - i);
+	}
+	return ans;
+}
+
+int findMax(vector<int>& A,int end){
+	int index = 0;
+	for(int i = 0;i < end;i++){
+	    if(A[i] > A[index]) index = i; 
+	}
+	return index;
+}
+
+void flip(vector<int>& A,int end){
+	int start = 0;
+	while(start < end) swap(A[start++],A[end--]);
+}
+
+// ----------------
+
+
 int main() {
     
     cin>>n;

@@ -1,17 +1,19 @@
 class Solution {
-    vector<vector<int>>dp;
+    vector<int>dp;
     
-    int f(int n, bool b){
-        if(n == 2) return b ? 2 : 1;
-        if(dp[n][b] != -1) return dp[n][b];
-        int ans = (b ? n : 0);
-        for(int i = n - 1;i >= 2;i--) ans = max(ans, (n - i) * f(i, 1));
-        return dp[n][b] = ans;
+    int f(int n){
+        if(n < 4) return n;
+        if(dp[n] != -1) return dp[n];
+        int ans = INT_MIN;
+        for(int i = n - 1;i >= 2;i--) ans = max(ans, (n - i) * f(i));
+        return dp[n] = ans;
     }
     
 public:
     int integerBreak(int n) {
-        dp.resize(n + 1, vector<int>(2, -1));
-        return f(n, 0);
+        if(n == 2) return 1;
+        if(n == 3) return 2; 
+        dp.resize(n + 1, -1);
+        return f(n);
     }
 };

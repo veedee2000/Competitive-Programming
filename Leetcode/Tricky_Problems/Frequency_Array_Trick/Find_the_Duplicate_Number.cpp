@@ -1,3 +1,5 @@
+// O(n) changing array allowed
+
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {

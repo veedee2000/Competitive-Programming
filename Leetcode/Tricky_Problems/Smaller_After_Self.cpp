@@ -1,25 +1,46 @@
+class BIT{
+    
+    vector<int>bit;
+    
+public: 
+    BIT(int n){
+        bit.resize(n + 1,0);
+    }
+    
+    void insert(int i){
+        i++;
+        while(i < bit.size()){
+            bit[i] ++;
+            i += i&-i;
+        }
+    }
+    
+    int query(int i){
+        i++;
+        int sum = 0;
+        while(i > 0){
+            sum += bit[i];
+            i -= i&-i;
+        }
+        return sum;
+    }
+    
+};
+
 class Solution {
 public:
     vector<int> countSmaller(vector<int>& nums) {
-        vector<int>sorted = nums,ans,s;
-        sort(sorted.begin(),sorted.end());
-        for(int i = 0;i < nums.size();i++){
-            int value = nums[i];
-            int indexInSorted = upper_bound(sorted.begin(),sorted.end(),value - 1) - sorted.begin();
-            int indexInSmall = upper_bound(s.begin(),s.end(),value - 1) - s.begin();
-            auto insertInPosition = upper_bound(s.begin(),s.end(),value);
-            s.insert(insertInPosition,value);
-            if(indexInSorted == nums.size()){
-                ans.push_back(0);
-            }
-            else{
-                if(indexInSmall == s.size()){
-                    ans.push_back(indexInSorted);
-                }
-                else{
-                    ans.push_back(indexInSorted - indexInSmall);
-                }
-            }
+        vector<int>sortedNums = nums;
+        sort(sortedNums.begin(),sortedNums.end());
+        int n = nums.size();
+        for(int i = 0;i < n;i++){
+            nums[i] = lower_bound(sortedNums.begin(),sortedNums.end(),nums[i]) - sortedNums.begin();
+        }
+        BIT fenwick(n);
+        vector<int>ans(n);
+        for(int i = n - 1;i >= 0;i--){
+            ans[i] = fenwick.query(nums[i] - 1); 
+            fenwick.insert(nums[i]);
         }
         return ans;
     }

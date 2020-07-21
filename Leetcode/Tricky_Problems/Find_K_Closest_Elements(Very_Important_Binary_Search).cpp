@@ -1,14 +1,13 @@
 class Solution {
 public:
-    vector<int> findClosestElements(vector<int>& A, int k, int x) {
-        int left = 0, right = A.size() - k;
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (x - A[mid] > A[mid + k] - x)
-                left = mid + 1;
-            else
-                right = mid;
+    vector<int> findClosestElements(vector<int>& nums, int k, int x) {
+        int n = nums.size();
+        int l = 0, r = n - k - 1, m;
+        while(l <= r){
+            int m = l + (r - l) / 2;
+            if(x - nums[m] <= nums[m + k] - x) r = m - 1;
+            else l = m + 1;
         }
-        return vector<int>(A.begin() + left, A.begin() + left + k);
+        return vector<int>(nums.begin() + l, nums.begin() + l + k);
     }
-};
+}; 

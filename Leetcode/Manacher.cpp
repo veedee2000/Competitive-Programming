@@ -1,36 +1,21 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
-        if(s == "") return "";
-        string modifiedS = "$";
+        string T = "#";
         for(auto x:s){
-            modifiedS += "#";
-            modifiedS.push_back(x);
+            T.push_back(x);
+            T.push_back('#');
         }
-        modifiedS += "#@";
-        vector<int>P(modifiedS.size(),0);
-        int C = 0,R = 0;
-        for(int i = 1;i < modifiedS.size() - 1;i++){
-            int mirr = 2 * C - i;
-            if(i < R) P[i] = min(R - i,P[mirr]);
-            
-            while(modifiedS[i + (1 + P[i])] == modifiedS[i - (1 + P[i])]) P[i]++;
-            if(i + P[i] > R){
-                C = i;
-                R = i + P[i];
-            }
+        int n = T.size();
+        vector<int>p(n, 0);
+        int center = 0, boundary = 0, maxLength = 0, reqCenter = 0; 
+        for(int i = 1;i < n - 1;i++){
+            int mirrorCenter = center - (i - center);
+            p[i] = (i > boundary) ? 0 : min(p[mirrorCenter], boundary - i);
+            while(i - (1 + p[i]) >= 0 and i + (1 + p[i]) < n and T[i - (1 + p[i])] == T[i + (1 + p[i])]) p[i]++;
+            if(p[i] > maxLength) maxLength = p[i], reqCenter = i; 
+            if(i + p[i] > boundary) center = i, boundary = boundary;
         }
-        int ansIndex,sz = 0;
-        bool c; // 0 for even, 1 for odd
-        for(int i = 2;i < modifiedS.size() - 1;i++) cout<<P[i]<<" ";
-        for(int i = 2;i < modifiedS.size() - 1;i++){
-            if(P[i] > sz){
-                sz = P[i];
-                ansIndex = i;
-                if((i - 1) % 2) c = 1;
-                else c = 0;
-            }
-        }
-        return c ? s.substr((ansIndex - 2) / 2 - (sz - 1) / 2,sz) : s.substr((ansIndex - 3) / 2 - (sz - 1) / 2,sz);
+        return s.substr((reqCenter - maxLength) / 2, maxLength);
     }
 };

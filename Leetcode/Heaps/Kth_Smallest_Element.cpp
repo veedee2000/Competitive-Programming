@@ -1,23 +1,22 @@
+#define t tuple<int, int, int>
 class Solution {
     
     struct comp{
-        bool operator ()(vector<int>a,vector<int>b){
-            return a[0] > b[0];
+        bool operator()(const t& a, const t& b){
+            return get<0>(a) > get<0>(b);
         }
     };
     
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        int n = matrix.size(),ans;
-        priority_queue<vector<int>,vector<vector<int>>,comp>pq;
-        for(int i = 0;i < n;i++) pq.push({matrix[0][i],0,i});
-        while(k--){
-            vector<int>curr = pq.top();
-            ans = curr[0];
+        int n = matrix.size();
+        priority_queue<t, vector<t>, comp>pq;
+        for(int i = 0;i < n;i++) pq.push({matrix[i][0], i, 0});
+        while(--k){
+            auto [val, i, j] = pq.top();
             pq.pop();
-            int x = curr[1],y = curr[2];
-            if(x < n - 1) pq.push({matrix[x + 1][y],x + 1,y});
+            if(j + 1 < n) pq.push({matrix[i][j + 1], i, j + 1});
         }
-        return ans;
+        return get<0>(pq.top());
     }
 };

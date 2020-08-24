@@ -1,19 +1,20 @@
 class Solution {
-public:
+    
     vector<vector<int>>dp;
-    int calculateMinimumHP(vector<vector<int>>& dungeon) {
-        if(!dungeon.size()) return 0;
-        int m = dungeon.size();
-        int n = dungeon[0].size();
-        dp.resize(m,vector<int>(n,0));
-        return f(0,0,dungeon);
+    int m, n;
+    
+    int f(int i, int j, vector<vector<int>>& dungeon){
+        if(i == m or j == n) return INT_MAX;
+        if(i == m - 1 and j == n - 1) return max(1 - dungeon[i][j], 1);
+        if(dp[i][j] != -1) return dp[i][j];
+        dp[i][j] = min(f(i + 1, j, dungeon), f(i,j + 1, dungeon));
+        return dp[i][j] = max(dp[i][j] - dungeon[i][j], 1);
     }
     
-    int f(int i,int j,vector<vector<int>>& dungeon){
-        if(i >= dungeon.size() or j >= dungeon[0].size()) return INT_MAX;
-        if(dp[i][j]) return dp[i][j];
-        int next = min(f(i + 1,j,dungeon),f(i,j + 1,dungeon));
-        next = (next == INT_MAX) ? 1 : next;
-        return dp[i][j] = max(next - dungeon[i][j],1);
+public:
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        m = dungeon.size(), n = dungeon[0].size();
+        dp.resize(m, vector<int>(n, -1));
+        return f(0, 0, dungeon);
     }
 };

@@ -14,7 +14,7 @@ public:
             p[i] = (i > boundary) ? 0 : min(p[mirrorCenter], boundary - i);
             while(i - (1 + p[i]) >= 0 and i + (1 + p[i]) < n and T[i - (1 + p[i])] == T[i + (1 + p[i])]) p[i]++;
             if(p[i] > maxLength) maxLength = p[i], reqCenter = i; 
-            if(i + p[i] > boundary) center = i, boundary = boundary;
+            if(i + p[i] > boundary) center = i, boundary = i + p[i];
         }
         return s.substr((reqCenter - maxLength) / 2, maxLength);
     }

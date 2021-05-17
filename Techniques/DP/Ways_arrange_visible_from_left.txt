@@ -1,0 +1,3 @@
+https://leetcode.com/problems/number-of-ways-to-rearrange-sticks-with-k-sticks-visible/
+
+Solution : https://leetcode.com/problems/number-of-ways-to-rearrange-sticks-with-k-sticks-visible/discuss/1211099/Simple-2d-DP-C%2B%2B-(with-Intuition)
